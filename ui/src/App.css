@@ -1,0 +1,144 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background: #0284c7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+}
+
+/* ── Header ───────────────────────────────────────────────────────── */
+.app__header {
+  position: relative;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: rgba(2, 100, 170, 0.55);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  flex-shrink: 0;
+}
+
+.app__logo {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+.app__tagline {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── Legend ───────────────────────────────────────────────────────── */
+.app__legend {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.app__legend-dot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.7);
+}
+
+.app__legend-dot::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.app__legend-dot--in-progress::before  { background: #ef4444; box-shadow: 0 0 5px rgba(239,68,68,0.7); }
+.app__legend-dot--validated::before    { background: #f97316; box-shadow: 0 0 5px rgba(249,115,22,0.7); }
+.app__legend-dot--raw::before          { background: #6b7280; box-shadow: 0 0 5px rgba(107,114,128,0.5); }
+
+/* ── Pull button ──────────────────────────────────────────────────── */
+.app__signout-btn {
+  padding: 6px 13px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: none;
+  color: rgba(255,255,255,0.45);
+  font-size: 11.5px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.app__signout-btn:hover {
+  color: rgba(255,255,255,0.8);
+  border-color: rgba(255,255,255,0.35);
+}
+
+.app__pull-btn {
+  margin-left: 12px;
+  padding: 6px 13px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.12);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+  white-space: nowrap;
+  color: #fff;
+}
+
+.app__pull-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.4);
+}
+
+.app__pull-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.app__pull-btn--error {
+  border-color: rgba(252,165,165,0.5);
+  background: rgba(239,68,68,0.2);
+  color: #fca5a5;
+}
+
+.app__pull-btn--error:hover:not(:disabled) {
+  background: rgba(239,68,68,0.3);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.app__pull-spinner {
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(255,255,255,0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .app__tagline { display: none; }
+  .app__legend  { display: none; }
+}

@@ -1,0 +1,129 @@
+.issue-panel {
+  position: fixed;
+  width: 288px;
+  max-height: calc(100vh - 48px);
+  padding: 16px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+
+  background: rgba(2, 100, 170, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 4px 16px rgba(0, 40, 120, 0.25),
+    0 24px 48px rgba(0, 40, 120, 0.3);
+
+  animation: panel-in 0.15s ease;
+}
+
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+.issue-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.issue-panel__key {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  font-family: ui-monospace, monospace;
+  color: rgba(255,255,255,0.45);
+}
+
+.issue-panel__close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  color: rgba(255,255,255,0.4);
+  padding: 0 2px;
+  border-radius: 4px;
+  transition: color 0.1s;
+}
+.issue-panel__close:hover { color: rgba(255,255,255,0.9); }
+
+.issue-panel__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.4;
+  color: rgba(255,255,255,0.92);
+}
+
+.issue-panel__description {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.55);
+  overflow-y: auto;
+  max-height: 180px;
+  white-space: pre-wrap;
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+
+.issue-panel__description::-webkit-scrollbar {
+  width: 4px;
+}
+.issue-panel__description::-webkit-scrollbar-track {
+  background: transparent;
+}
+.issue-panel__description::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 99px;
+}
+.issue-panel__description::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.4);
+}
+
+.issue-panel__chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.issue-panel__chip {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 3px 8px;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.75);
+}
+
+.issue-panel__chip--in-progress { background: #edfce0; color: #365314; }
+.issue-panel__chip--raw         { background: #fef0e0; color: #7c2d12; }
+.issue-panel__chip--parked      { background: #f0eeff; color: #3730a3; }
+.issue-panel__chip--shipped     { background: #e8fdf0; color: #14532d; }
+.issue-panel__chip--validated   { background: #fef9e0; color: #78350f; }
+
+.issue-panel__cta {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 2px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: background 0.15s;
+}
+.issue-panel__cta:hover { background: rgba(255,255,255,0.25); }

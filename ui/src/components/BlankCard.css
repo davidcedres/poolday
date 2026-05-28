@@ -1,0 +1,7 @@
+.blank-card {
+  position: absolute;
+  border-radius: 14px;
+  border: 1.5px dashed rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.04);
+  pointer-events: none;
+}

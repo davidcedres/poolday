@@ -1,4 +1,4 @@
-const BASE = "http://localhost:3001";
+const BASE = import.meta.env.VITE_API_URL;
 const TOKEN_KEY = "poolday_token";
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY);

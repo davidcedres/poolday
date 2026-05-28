@@ -1,7 +1,7 @@
 import type { Heat, Idea } from "../data/ideas";
 import { authHeaders, clearToken } from "./auth";
 
-const BASE = "http://localhost:3001";
+const BASE = import.meta.env.VITE_API_URL;
 
 interface DbIssue {
   key: string;

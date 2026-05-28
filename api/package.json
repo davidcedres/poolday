@@ -12,6 +12,7 @@
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.45.2",
     "hono": "^4.7.0",
+    "hono-rate-limiter": "^0.5.3",
     "jira.js": "^5.3.1",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.21.0"

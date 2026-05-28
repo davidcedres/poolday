@@ -8,14 +8,30 @@ import { eq, and } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import type { Context, Next } from "hono";
+import { rateLimiter } from "hono-rate-limiter";
 import { db, initDb, usersTable, jiraCredentialsTable, issuesTable } from "./db.js";
 
-const { GROQ_API_KEY, JWT_SECRET, CORS_ORIGIN = "http://localhost:5173" } = process.env;
+const { GROQ_API_KEY, JWT_SECRET, CORS_ORIGIN, PORT } = process.env;
 
-if (!JWT_SECRET) {
-  console.error("JWT_SECRET must be set in server/.env");
-  process.exit(1);
+for (const [key, val] of Object.entries({ JWT_SECRET, CORS_ORIGIN, PORT })) {
+  if (!val) { console.error(`${key} must be set in .env`); process.exit(1); }
 }
+
+// ── Rate limiting ──────────────────────────────────────────────────
+
+// Auth: 20 attempts per 15 min per IP
+const authLimiter = rateLimiter({
+  windowMs: 15 * 60 * 1000,
+  limit: 20,
+  keyGenerator: c => c.req.header("x-forwarded-for")?.split(",")[0].trim() ?? "unknown",
+});
+
+// Sync: 10 per hour per user — Groq cost protection
+const syncLimiter = rateLimiter({
+  windowMs: 60 * 60 * 1000,
+  limit: 10,
+  keyGenerator: c => c.req.header("authorization") ?? "anon",
+});
 
 // ── Helpers ────────────────────────────────────────────────────────
 
@@ -84,7 +100,7 @@ type Variables = { userId: number };
 const app = new Hono<{ Variables: Variables }>();
 
 app.use("*", logger());
-app.use("*", cors({ origin: CORS_ORIGIN }));
+app.use("*", cors({ origin: CORS_ORIGIN! }));
 
 const requireAuth = async (c: Context<{ Variables: Variables }>, next: Next) => {
   const auth = c.req.header("Authorization");
@@ -100,7 +116,7 @@ const requireAuth = async (c: Context<{ Variables: Variables }>, next: Next) => 
 
 // ── Auth routes ────────────────────────────────────────────────────
 
-app.post("/api/auth/signup", async (c) => {
+app.post("/api/auth/signup", authLimiter, async (c) => {
   const { email, password } = await c.req.json<{ email: string; password: string }>();
   if (!email || !password || password.length < 6)
     return c.json({ error: "Email and password (min 6 chars) required" }, 400);
@@ -114,7 +130,7 @@ app.post("/api/auth/signup", async (c) => {
   return c.json({ token });
 });
 
-app.post("/api/auth/login", async (c) => {
+app.post("/api/auth/login", authLimiter, async (c) => {
   const { email, password } = await c.req.json<{ email: string; password: string }>();
   const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email));
   if (!user || !(await bcrypt.compare(password, user.passwordHash)))
@@ -158,7 +174,7 @@ app.get("/api/backlog", requireAuth, async (c) => {
   return c.json({ issues });
 });
 
-app.post("/api/backlog/sync", requireAuth, async (c) => {
+app.post("/api/backlog/sync", requireAuth, syncLimiter, async (c) => {
   const userId = c.get("userId");
   const [creds] = await db.select().from(jiraCredentialsTable).where(eq(jiraCredentialsTable.userId, userId));
   if (!creds) return c.json({ error: "Jira credentials not configured" }, 400);
@@ -224,8 +240,9 @@ app.post("/api/backlog/sync", requireAuth, async (c) => {
 
 await initDb();
 
-const server = serve({ fetch: app.fetch, port: 3001 }, () =>
-  console.log("funpool server → http://localhost:3001")
+const port = parseInt(PORT!);
+const server = serve({ fetch: app.fetch, port }, () =>
+  console.log(`funpool server → http://localhost:${port}`)
 );
 
 process.on("SIGINT", () => server.close());

@@ -1,4 +1,4 @@
-# funpool
+# poolday
 
 > A visual idea space for product owners — not another ticket tracker.
 
@@ -6,7 +6,7 @@
 
 ## The idea
 
-Jira and Linear are great for engineers. Funpool is for the moment *before* that — when you're staring at a blank whiteboard asking *what should we build next?*
+Jira and Linear are great for engineers. poolday is for the moment _before_ that — when you're staring at a blank whiteboard asking _what should we build next?_
 
 It's a living pool of feature ideas. Throw anything in. Let it float, sink, or rise to the center as it proves its worth.
 
@@ -38,26 +38,26 @@ The main CTA is a single input at the bottom of the screen: type your idea, hit 
 
 ---
 
-## What funpool is NOT
+## What poolday is NOT
 
 - Not a sprint planner
 - Not a Gantt chart
 - Not a place to write acceptance criteria
 - Not a replacement for your eng team's issue tracker
 
-Funpool answers **WHAT to build**, not HOW or WHEN. It's the product owner's brainstorm canvas, not the engineer's todo list.
+poolday answers **WHAT to build**, not HOW or WHEN. It's the product owner's brainstorm canvas, not the engineer's todo list.
 
 ---
 
 ## Core concepts
 
-| Concept | Description |
-|---|---|
-| **Idea card** | The atomic unit. A title, a color temperature, a position on the canvas |
-| **Pool** | The shared 2D canvas. A team has one pool (or several, per product area) |
-| **Heat** | A score that determines color — driven by votes, comments, linked outcomes |
-| **Gravity** | Heat also determines position — hot ideas drift toward the center |
-| **Wiggly** | The subtle CSS animation on each card. Makes the space feel like a living organism, not a spreadsheet |
+| Concept       | Description                                                                                           |
+| ------------- | ----------------------------------------------------------------------------------------------------- |
+| **Idea card** | The atomic unit. A title, a color temperature, a position on the canvas                               |
+| **Pool**      | The shared 2D canvas. A team has one pool (or several, per product area)                              |
+| **Heat**      | A score that determines color — driven by votes, comments, linked outcomes                            |
+| **Gravity**   | Heat also determines position — hot ideas drift toward the center                                     |
+| **Wiggly**    | The subtle CSS animation on each card. Makes the space feel like a living organism, not a spreadsheet |
 
 ---
 
